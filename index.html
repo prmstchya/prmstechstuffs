@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>prmstchybnyrksa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #25002f, #0b0020, #000);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0
+        }
+
+        /* 🌙 MOON */
+        .moon {
+            position: fixed;
+            top: 55px;
+            right: 40px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #e7d4ff;
+            box-shadow: 0 0 60px rgba(231, 212, 255, .55);
+            z-index: 1;
+        }
+
+        .moon::after {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 26px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #0b0020;
+        }
+
+        /* 🪐 PLANET */
+        .planet {
+            position: fixed;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            bottom: -170px;
+            left: -160px;
+            background: radial-gradient(circle at 30% 30%, #9b5cff, #6b00ff, #17002a);
+            box-shadow: inset -40px -40px 80px rgba(0, 0, 0, .5),
+                0 0 140px rgba(155, 92, 255, .35);
+            animation: float 12s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .planet .ring {
+            position: absolute;
+            width: 540px;
+            height: 170px;
+            border-radius: 50%;
+            border: 3px solid rgba(155, 92, 255, .25);
+            top: 140px;
+            left: -60px;
+            transform: rotate(-18deg);
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-28px)
+            }
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 430px;
+            padding: 38px 26px;
+            background: rgba(255, 255, 255, .07);
+            border-radius: 26px;
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: 0 0 90px rgba(155, 92, 255, .25);
+            text-align: center;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            margin: auto;
+            background: conic-gradient(#b57bff, #7a00ff, #b57bff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 600;
+            box-shadow: 0 0 40px rgba(155, 92, 255, .6);
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .glitch {
+            position: relative;
+            margin-top: 18px;
+            font-size: 22px;
+            color: #b57bff;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            width: 100%;
+        }
+
+        .glitch::before {
+            color: #6b00ff;
+            animation: glitch1 2.5s infinite;
+        }
+
+        .glitch::after {
+            color: #fff;
+            animation: glitch2 1.8s infinite;
+        }
+
+        @keyframes glitch1 {
+            10% {
+                clip: rect(0, 9999px, 12px, 0);
+                transform: translate(-2px, -2px)
+            }
+        }
+
+        @keyframes glitch2 {
+            15% {
+                clip: rect(14px, 9999px, 30px, 0);
+                transform: translate(2px, 2px)
+            }
+        }
+
+        .subtitle {
+            font-size: 13px;
+            opacity: .75;
+            margin: 10px 0 22px;
+        }
+
+        .about {
+            font-size: 13px;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: inset 0 0 18px rgba(155, 92, 255, .15);
+            margin-bottom: 26px;
+        }
+
+        .links a {
+            display: block;
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 14px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #7a00ff, #b57bff);
+            box-shadow: 0 0 22px rgba(155, 92, 255, .6);
+            transition: .3s;
+        }
+
+        .links a:hover {
+            transform: scale(1.06)
+        }
+
+        .credit {
+            margin-top: 28px;
+            font-size: 11px;
+            opacity: .55;
+            line-height: 1.6;
+        }
+
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .25);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(155, 92, 255, .5);
+            z-index: 5;
+        }
+
+        @media (max-width: 360px) {
+            .card {
+                padding: 32px 20px
+            }
+
+            .glitch {
+                font-size: 20px
+            }
+
+            .about {
+                font-size: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="space"></canvas>
+    <div class="moon"></div>
+    <div class="planet">
+        <div class="ring"></div>
+    </div>
+
+    <audio id="bgm" loop>
+        <source src="Let Down.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <div class="container">
+        <div class="card">
+            <div class="avatar">P</div>
+
+            <div class="glitch" data-text="prmstchybnyrksa">
+                prmstchybnyrksa
+            </div>
+
+            <div class="subtitle">
+                Gamer • Roblox • Beginner Coder
+            </div>
+
+            <div class="about">
+                Haii semuaa! 👋
+                Kenalin aku <b>Pram</b>.
+                Aku suka main <b>Roblox</b>, terutama
+                <b>Murder Mystery 2</b> 🔪🕵️
+                <br><br>
+                Aku masih belajar <b>coding</b>,
+                jadi pelan-pelan tapi niat ✨
+            </div>
+
+            <div class="links">
+                <a href="https://www.roblox.com/users/6302991/profile?friendshipSourceType=PlayerSearch"
+                    target="_blank">🎮 Roblox</a>
+                <a href="https://youtube.com/@ultrsnica" target="_blank">▶️ YouTube</a>
+                <a href="https://www.instagram.com/bundaranhello/" target="_blank">📸 Instagram</a>
+            </div>
+
+            <div class="credit">
+                Music: <i>Let Down by Radiohead</i><br>
+                Design & Code by <b>prmstchybnyrksa</b>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MUSIC
+        const music = document.getElementById("bgm");
+        let playing = false;
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.volume = 0.3;
+                music.play().catch(() => { });
+            } else {
+                music.pause();
+            }
+        }
+
+        document.addEventListener("click", () => {
+            if (!playing) {
+                music.volume = 0.3;
+                music.play().catch(() => { });
+                playing = true;
+            }
+        }, { once: true });
+
+        // SPACE + SHOOTING STAR
+        const c = document.getElementById("space"), ctx = c.getContext("2d");
+        function resize() { c.width = innerWidth; c.height = innerHeight; }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const stars = Array.from({ length: 140 }, () => ({
+            x: Math.random() * c.width,
+            y: Math.random() * c.height,
+            r: Math.random() * 1.5 + 0.5,
+            s: Math.random() * 0.6 + 0.2
+        }));
+
+        let meteor = null;
+        setInterval(() => {
+            meteor = { x: Math.random() * c.width, y: 0, vx: 8, vy: 4, l: 0 };
+        }, 6000);
+
+        function draw() {
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+                s.y += s.s;
+                if (s.y > c.height) s.y = 0;
+            });
+
+            if (meteor) {
+                ctx.strokeStyle = "rgba(255,255,255,0.8)";
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(meteor.x, meteor.y);
+                ctx.lineTo(meteor.x - 60, meteor.y - 30);
+                ctx.stroke();
+                meteor.x += meteor.vx;
+                meteor.y += meteor.vy;
+                meteor.l++;
+                if (meteor.l > 30) meteor = null;
+            }
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+
+</body>
+
+</html>
